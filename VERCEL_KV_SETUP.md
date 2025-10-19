@@ -41,11 +41,7 @@ After creating the database:
 2. Add them to your `.env.local` file (create it if it doesn't exist)
 3. Your `.env.local` should look like:
 
-```bash
-# Spotify Credentials
-NEXT_PUBLIC_SPOTIFY_CLIENT_ID=ebe7148078ae47478a7c398de4d262a5
-SPOTIFY_CLIENT_SECRET=3902afe97f934992a0f5dfd1e8ec8498
-NEXT_PUBLIC_SPOTIFY_REDIRECT_URI=https://spotify-playback-lemon.vercel.app
+
 
 # Vercel KV
 KV_URL="redis://..."
@@ -113,3 +109,4 @@ KV_REST_API_READ_ONLY_TOKEN=
 5. **Tokens auto-refresh** when they expire (good for ~60 days with refresh token)
 
 Your Spotify credentials are securely stored server-side and are never exposed to visitors!
+
