@@ -123,9 +123,9 @@ export default function NowPlayingWidget() {
                 className="text-2xl font-semibold text-white mb-2"
                 style={{ fontFamily: "Funnel Display, sans-serif" }}
               >
-                Nothing Playing
+                nothing playing?
               </h3>
-              <p className="text-slate-400 text-sm">Start playing a song on Spotify to see it here</p>
+              <p className="text-slate-400 text-sm">i'm probably busy with some stuff irl</p>
             </div>
           </div>
         </div>
