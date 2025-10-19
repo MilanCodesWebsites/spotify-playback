@@ -1,9 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { tokenStorage } from "@/lib/token-store"
 
 export async function GET(request: NextRequest) {
-  const accessToken = request.cookies.get("spotify_access_token")?.value
+  const tokens = await tokenStorage.get()
 
-  if (!accessToken) {
+  if (!tokens) {
     return NextResponse.json({ authenticated: false }, { status: 401 })
   }
 

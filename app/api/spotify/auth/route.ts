@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { tokenStorage } from "@/lib/token-store"
 
 export async function POST(request: NextRequest) {
   try {
@@ -31,30 +32,17 @@ export async function POST(request: NextRequest) {
     })
 
     if (!tokenResponse.ok) {
+      const errorData = await tokenResponse.json()
+      console.error("Token exchange failed:", errorData)
       return NextResponse.json({ error: "Failed to exchange code for token" }, { status: 400 })
     }
 
     const tokenData = await tokenResponse.json()
 
-    // Store token in a cookie (httpOnly for security)
-    const response = NextResponse.json({ success: true })
-    response.cookies.set("spotify_access_token", tokenData.access_token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: tokenData.expires_in,
-    })
+    // Store tokens in server-side storage (accessible by all clients)
+    await tokenStorage.set(tokenData.access_token, tokenData.refresh_token, tokenData.expires_in)
 
-    if (tokenData.refresh_token) {
-      response.cookies.set("spotify_refresh_token", tokenData.refresh_token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        maxAge: 30 * 24 * 60 * 60, // 30 days
-      })
-    }
-
-    return response
+    return NextResponse.json({ success: true })
   } catch (error) {
     console.error("Auth error:", error)
     return NextResponse.json({ error: "Authentication failed" }, { status: 500 })

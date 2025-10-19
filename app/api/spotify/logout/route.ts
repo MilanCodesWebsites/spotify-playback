@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server"
+import { tokenStorage } from "@/lib/token-store"
 
 export async function POST() {
-  const response = NextResponse.json({ success: true })
-  response.cookies.delete("spotify_access_token")
-  response.cookies.delete("spotify_refresh_token")
-  return response
+  await tokenStorage.clear()
+  return NextResponse.json({ success: true })
 }
