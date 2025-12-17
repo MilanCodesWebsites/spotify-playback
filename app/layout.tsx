@@ -15,7 +15,6 @@ const _funnelDisplay = Funnel_Display({ subsets: ["latin"], weight: ["400", "500
 export const metadata: Metadata = {
   title: "Spotify Now Playing",
   description: "Display your currently playing Spotify track",
-  generator: "v0.app",
 }
 
 export default function RootLayout({
